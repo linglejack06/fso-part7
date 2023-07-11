@@ -1,27 +1,18 @@
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-export const useResource = async (baseUrl) => {
-  let token;
-  const setToken = (newToken) => {
-    token = `Bearer ${newToken}`;
-  }
-  const getAll = async () => {
-    const response = await axios.get(baseUrl);
-    return response.data;
-  }
+export const useResource = (baseUrl) => {
+  const [resources, setResources] = useState([]);
   const create = async (newObject) => {
-    const config = {
-      headers: {
-        Authorization: token,
-      },
-    };
-    const response = await axios.post(baseUrl, newObject, config);
-    return response.data;
+    const response = await axios.post(baseUrl, newObject);
+    setResources(resources.concat(response.data));
   }
-  const resources = await getAll();
+  useEffect(() => {
+    axios.get(baseUrl).then((res) => setResources(res.data));
+  }, [baseUrl])
   return [
     resources, {
-      setToken, create,
+      create,
     }
   ];
 }
