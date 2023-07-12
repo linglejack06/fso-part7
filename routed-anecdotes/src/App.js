@@ -5,6 +5,31 @@ import {
   Routes, Route, Link, useParams, useNavigate,
 } from 'react-router-dom';
 import { Container, TableContainer, Table, TableBody, TableRow, TableCell, Paper, TextField, Button , Alert, AppBar, Toolbar } from '@mui/material';
+import styled from 'styled-components';
+
+const StyledButton = styled.button`
+  background: Bisque;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid Chocolate;
+  border-radius: 3px;
+`
+const Page = styled.div`
+  padding: 1em;
+  background: papayawhip;
+`
+
+const Navigation = styled.div`
+  background: BurlyWood;
+  padding: 1em;
+`
+
+const StyledFooter = styled.div`
+  background: Chocolate;
+  padding: 1em;
+  margin-top: 1em;
+`
 
 const Menu = () => {
   const padding = {
@@ -76,11 +101,11 @@ const About = () => (
 )
 
 const Footer = () => (
-  <div>
+  <StyledFooter>
     Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
 
     See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
-  </div>
+  </StyledFooter>
 )
 
 const CreateNew = (props) => {
@@ -122,7 +147,7 @@ const CreateNew = (props) => {
           <Button variant='contained' type='submit' color='primary'>Add Anecdote</Button>
         </div>
         <div>
-          <Button color='secondary' type='button' onClick={handleReset}>Reset</Button>
+          <StyledButton type='button' primary='' onClick={handleReset}>Reset</StyledButton>
         </div>
       </form>
     </div>
