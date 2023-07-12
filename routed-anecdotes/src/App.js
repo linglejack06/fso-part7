@@ -4,49 +4,50 @@ import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate,
 } from 'react-router-dom';
-import { Table, Alert, Form, Button, Navbar, Nav } from 'react-bootstrap';
+import { Container, TableContainer, Table, TableBody, TableRow, TableCell, Paper, TextField, Button , Alert, AppBar, Toolbar } from '@mui/material';
 
 const Menu = () => {
   const padding = {
     paddingRight: 5
   }
   return (
-    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
-      <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-      <Navbar.Collapse id='responsive-navbar-nav'>
-        <Nav.Link href='#' as='span'>
-          <Link style={padding} to='/'>Home</Link>
-        </Nav.Link>
-        <Nav.Link href='#' as='span'>
-          <Link style={padding} to='/create'>Create New</Link>
-        </Nav.Link>
-        <Nav.Link href='#' as='span'>
-          <Link style={padding} to='/about'>About</Link>
-        </Nav.Link>
-      </Navbar.Collapse>
-    </Navbar>
+    <AppBar position='static'>
+      <Toolbar>
+        <Button color='inherit' component={Link} to='/'>
+          Home
+        </Button>
+        <Button color='inherit' component={Link} to='/create'>
+          Create New
+        </Button>
+        <Button color='inherit' component={Link} to='/about'>
+          About
+        </Button>
+      </Toolbar>
+    </AppBar>
   )
 }
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
-    <Table striped>
-      <tbody>
-        {anecdotes.map((anecdote) => (
-          <tr key={anecdote.id}>
-            <td>
-              <Link to={`/anecdotes/${anecdote.id}`}>
-                {anecdote.content}
-              </Link>
-            </td>
-            <td>
-              {anecdote.author}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Table>
+    <TableContainer component={Paper}>
+      <Table>
+        <TableBody>
+          {anecdotes.map((anecdote) => (
+            <TableRow key={anecdote.id}>
+              <TableCell>
+                <Link to={`/anecdotes/${anecdote.id}`}>
+                  {anecdote.content}
+                </Link>
+              </TableCell>
+              <TableCell>
+                {anecdote.author}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   </div>
 )
 const Anecdote = ({ anecdotes }) => {
@@ -107,18 +108,23 @@ const CreateNew = (props) => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Content:</Form.Label>
-          <Form.Control name='content' {...content} />
-          <Form.Label>Author:</Form.Label>
-          <Form.Control name='author' {...author} />
-          <Form.Label>Additional Info: </Form.Label>
-          <Form.Control name='info' placeholder='https://www.example.org' {...info} />
-          <Button variant='primary' type='submit'>Add Anecdote</Button>
-          <Button variant='secondary' type='button' onClick={handleReset}>Reset</Button>
-        </Form.Group>
-      </Form>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <TextField label='Content' {...content} />
+        </div>
+        <div>
+          <TextField label='Author: ' {...author} />
+        </div>
+        <div>
+          <TextField label='Info: ' placeholder='https://example.org' {...info} />
+        </div>
+        <div>
+          <Button variant='contained' type='submit' color='primary'>Add Anecdote</Button>
+        </div>
+        <div>
+          <Button color='secondary' type='button' onClick={handleReset}>Reset</Button>
+        </div>
+      </form>
     </div>
   )
 
@@ -127,7 +133,7 @@ const CreateNew = (props) => {
 const Notification = ({ notification }) => {
   if (!notification) return;
   return (
-    <Alert variant='success'>
+    <Alert severity='success'>
       {notification}
     </Alert>
   )
@@ -176,7 +182,7 @@ const App = () => {
   }
 
   return (
-    <div className='container'>
+    <Container>
       <h1>Software anecdotes</h1>
       <Router>
         <Menu />
@@ -189,7 +195,7 @@ const App = () => {
         </Routes>
       </Router>
       <Footer />
-    </div>
+    </Container>
   )
 }
 
