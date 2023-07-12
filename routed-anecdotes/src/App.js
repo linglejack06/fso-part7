@@ -4,18 +4,27 @@ import {
   BrowserRouter as Router,
   Routes, Route, Link, useParams, useNavigate,
 } from 'react-router-dom';
-import { Table } from 'react-bootstrap';
+import { Table, Alert, Form, Button, Navbar, Nav } from 'react-bootstrap';
 
 const Menu = () => {
   const padding = {
     paddingRight: 5
   }
   return (
-    <div>
-      <Link style={padding} to="/">Anecdotes</Link>
-      <Link style={padding} to="/create">Create New</Link>
-      <Link style={padding} to="/about">About</Link>
-    </div>
+    <Navbar collapseOnSelect expand='lg' bg='dark' variant='dark'>
+      <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+      <Navbar.Collapse id='responsive-navbar-nav'>
+        <Nav.Link href='#' as='span'>
+          <Link style={padding} to='/'>Home</Link>
+        </Nav.Link>
+        <Nav.Link href='#' as='span'>
+          <Link style={padding} to='/create'>Create New</Link>
+        </Nav.Link>
+        <Nav.Link href='#' as='span'>
+          <Link style={padding} to='/about'>About</Link>
+        </Nav.Link>
+      </Navbar.Collapse>
+    </Navbar>
   )
 }
 
@@ -98,32 +107,29 @@ const CreateNew = (props) => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          content
-          <input name='content' {...content} />
-        </div>
-        <div>
-          author
-          <input name='author' {...author} />
-        </div>
-        <div>
-          url for more info
-          <input name='info' {...info} />
-        </div>
-        <button type="submit">create</button>
-        <button type="button" onClick={handleReset}>Reset</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>Content:</Form.Label>
+          <Form.Control name='content' {...content} />
+          <Form.Label>Author:</Form.Label>
+          <Form.Control name='author' {...author} />
+          <Form.Label>Additional Info: </Form.Label>
+          <Form.Control name='info' placeholder='https://www.example.org' {...info} />
+          <Button variant='primary' type='submit'>Add Anecdote</Button>
+          <Button variant='secondary' type='button' onClick={handleReset}>Reset</Button>
+        </Form.Group>
+      </Form>
     </div>
   )
 
 }
 
 const Notification = ({ notification }) => {
+  if (!notification) return;
   return (
-    <div className="notification-message">
+    <Alert variant='success'>
       {notification}
-    </div>
+    </Alert>
   )
 }
 const App = () => {
