@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import blogService from './services/blogService';
 import loginService from './services/loginService';
 import sorter from './utils/sorter';
+import { setNotification, removeNotification, useNotificationDispatch } from './contexts/notificationContext';
 import BlogList from './components/BlogList';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
@@ -9,7 +10,7 @@ import Message from './components/Message';
 import Togglable from './components/Togglable';
 
 const App = () => {
-  const [message, setMessage] = useState(null);
+  const notificationDispatch = useNotificationDispatch();
   const [error, setError] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
@@ -28,16 +29,13 @@ const App = () => {
       blogService.setToken(userObject.token);
     }
   }, [])
-  const addMessage = (message, error) => {
-    if (error) {
-      setError(true);
-    } else {
-      setError(false);
-    }
-    setMessage(message);
+  const displayMessage = (message, error = false) => {
+    notificationDispatch(setNotification({
+      message,
+      error,
+    }));
     setTimeout(() => {
-      setMessage(null);
-      setError(false);
+      notificationDispatch(removeNotification())
     }, 5000)
   }
   const handleLogin = async (credentials) => {
@@ -48,10 +46,10 @@ const App = () => {
       }
       window.localStorage.setItem('loggedUser', JSON.stringify(response));
       blogService.setToken(response.token);
-      addMessage(`Successfully logged in as ${response.name}`);
+      displayMessage(`Successfully logged in as ${response.name}`)
     } catch (error) {
       console.error(error.message);
-      addMessage('Invalid Username or password', true);
+      displayMessage('Incorrect Credentials', true);
     }
   }
   const handleLogout = () => {
@@ -63,9 +61,9 @@ const App = () => {
     try {
       const blog = await blogService.addBlog(blogObject);
       setBlogs(sorter([...blogs, blog]));
-      addMessage('Successfully created blog');
+      displayMessage('Successfully created blog');
     } catch (error) {
-      addMessage(error.message, true);
+      displayMessage(error.message, true);
     }
   }
   const addLike = async (blogId) => {
@@ -75,9 +73,9 @@ const App = () => {
       const updatedBlog = await blogService.updateLikes(correctBlog[0]);
       const changedBlogs = blogs.filter((blog) => blog.id !== blogId);
       setBlogs(sorter([...changedBlogs, updatedBlog]))
-      addMessage(`Blog now has ${updatedBlog.likes} likes`);
+      displayMessage(`Blog now has ${updatedBlog.likes} likes`);
     } catch (error) {
-      addMessage(error.message, true);
+      displayMessage(error.message, true);
     }
   }
   const deleteBlog = async (blogId) => {
@@ -87,9 +85,9 @@ const App = () => {
         await blogService.deleteBlog(blogId);
         const updatedBlogs = blogs.filter((blog) => blog.id !== blogId);
         setBlogs(sorter(updatedBlogs));
-        addMessage(`Successfully deleted ${foundBlog[0].title}`);
+        displayMessage(`Successfully deleted ${foundBlog[0].title}`);
       } catch (error)  {
-        addMessage(error.message, error);
+        displayMessage(error.message, error);
       }
     }
   }
@@ -97,7 +95,7 @@ const App = () => {
     <>
       {( user === null) ? (
         <div className='login'>
-          <Message message={message} error={error} />
+          <Message/>
           <Togglable buttonLabel='login' ref={loginRef}>
             <LoginForm login={handleLogin} />
           </Togglable>
@@ -105,11 +103,8 @@ const App = () => {
       ) : (
         <div>
           <div>
-            {(message == null) ? (
-              <h1>Logged In: {user.name}</h1>
-              ) : (
-                <Message message={message} error={error} />
-              )}
+            <h1>Logged In: {user.name}</h1>
+            <Message />
             <button onClick={handleLogout}>Logout</button>
           </div>
           <Togglable buttonLabel='New Blog' ref={blogRef}>
