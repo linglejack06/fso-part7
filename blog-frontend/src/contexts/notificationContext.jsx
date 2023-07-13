@@ -5,7 +5,11 @@ const notificationContext = createContext();
 const notificationReducer = (state, action) => {
   switch(action.type) {
     case 'SET':
-      return action.payload;
+      console.log(action.payload);
+      return {
+        message: action.payload.message,
+        error: action.payload.error,
+      }
     case 'REMOVE':
       return {
         message: '',
@@ -31,8 +35,8 @@ export function setNotification (message, error) {
   return {
     type: 'SET',
     payload: {
-      message,
-      error,
+      message: message,
+      error: error,
     },
   }
 }

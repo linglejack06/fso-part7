@@ -30,10 +30,7 @@ const App = () => {
     }
   }, [])
   const displayMessage = (message, error = false) => {
-    notificationDispatch(setNotification({
-      message,
-      error,
-    }));
+    notificationDispatch(setNotification(message, error));
     setTimeout(() => {
       notificationDispatch(removeNotification())
     }, 5000)
