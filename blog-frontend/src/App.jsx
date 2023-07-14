@@ -23,7 +23,7 @@ const App = () => {
   }, [])
   const newBlogMutation = useMutation(blogService.addBlog, {
     onSuccess: (newBlog) => {
-      const blogs = QueryClient.getQueryData('blogs');
+      const blogs = queryClient.getQueryData('blogs');
       queryClient.setQueryData('blogs', blogs.concat(newBlog))
     }
   });
@@ -54,7 +54,7 @@ const App = () => {
     <>
       {( user === null) ? (
         <div className='login'>
-          <Message/>
+          <Message />
           <Togglable buttonLabel='login'>
             <LoginForm login={handleLogin} />
           </Togglable>

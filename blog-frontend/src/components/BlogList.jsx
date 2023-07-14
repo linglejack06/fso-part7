@@ -8,15 +8,6 @@ const BlogList = ({ user }) => {
   const notificationDispatch = useNotificationDispatch();
   const queryClient = useQueryClient();
   const blogResult = useQuery('blogs', () => blogService.getBlogs());
-  if(blogResult.isLoading) {
-    return <div>Loading...</div>
-  }
-  if(blogResult.isError) {
-    displayMessage(notificationDispatch, 'Error loading blogs', true);
-    console.error(blogResult);
-    return null;
-  }
-  const blogs = sorter(blogResult.data);
   const updateBlogLikesMutation = useMutation(blogService.updateLikes, {
     onSuccess: (updatedBlog) => {
       const blogs = queryClient.getQueryData('blogs');
@@ -29,6 +20,15 @@ const BlogList = ({ user }) => {
       queryClient.invalidateQueries('blogs');
     }
   })
+  if(blogResult.isLoading) {
+    return <div>Loading...</div>
+  }
+  if(blogResult.isError) {
+    displayMessage(notificationDispatch, 'Error loading blogs', true);
+    console.error(blogResult);
+    return null;
+  }
+  const blogs = sorter(blogResult.data);
   const addLike = (blogId) => {
     const correctBlog = blogs.find((blog) => blog.id === blogId);
     updateBlogLikesMutation.mutate(correctBlog);
