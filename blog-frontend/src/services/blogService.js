@@ -6,8 +6,8 @@ const setToken = (newToken) => {
 }
 const BASEURL = '/api/blogs';
 const getBlogs = async () => {
-  const response = await axios.get(BASEURL);
-  return response.data;
+  const res = await axios.get('http://localhost:3001/api/blogs');
+  return res.data;
 }
 const addBlog = async (newBlog) => {
   const params = {

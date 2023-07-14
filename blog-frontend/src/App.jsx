@@ -1,10 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
-import { useQuery } from 'react-query';
+import { useQueryClient, useMutation } from 'react-query';
 import blogService from './services/blogService';
 import loginService from './services/loginService';
-import { newBlogMutation } from './blogMutation';
-import sorter from './utils/sorter';
-import { setNotification, removeNotification, useNotificationDispatch } from './contexts/notificationContext';
+import { displayMessage, useNotificationDispatch } from './contexts/notificationContext';
 import BlogList from './components/BlogList';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
@@ -13,17 +11,8 @@ import Togglable from './components/Togglable';
 
 const App = () => {
   const notificationDispatch = useNotificationDispatch();
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(null);
-  const loginRef = useRef(null);
-  const blogRef = useRef(null);
-  const blogsResult = useQuery(
-    'blogs',
-    blogService.getBlogs
-  );
-  if(blogsResult.isLoading) {
-    return <div>Loading...</div>
-  };
-  const blogs = sorter(blogsResult.data);
   useEffect(() => {
     const JSONUser = window.localStorage.getItem('loggedUser');
     if (JSONUser) {
@@ -32,12 +21,12 @@ const App = () => {
       blogService.setToken(userObject.token);
     }
   }, [])
-  const displayMessage = (message, error = false) => {
-    notificationDispatch(setNotification(message, error));
-    setTimeout(() => {
-      notificationDispatch(removeNotification())
-    }, 5000)
-  }
+  const newBlogMutation = useMutation(blogService.addBlog, {
+    onSuccess: (newBlog) => {
+      const blogs = QueryClient.getQueryData('blogs');
+      queryClient.setQueryData('blogs', blogs.concat(newBlog))
+    }
+  });
   const handleLogin = async (credentials) => {
     try {
       const response = await loginService.login(credentials);
@@ -46,10 +35,10 @@ const App = () => {
       }
       window.localStorage.setItem('loggedUser', JSON.stringify(response));
       blogService.setToken(response.token);
-      displayMessage(`Successfully logged in as ${response.name}`)
+      displayMessage(notificationDispatch, `Successfully logged in as ${response.name}`)
     } catch (error) {
       console.error(error.message);
-      displayMessage('Incorrect Credentials', true);
+      displayMessage(notificationDispatch, 'Incorrect Credentials', true);
     }
   }
   const handleLogout = () => {
@@ -58,44 +47,15 @@ const App = () => {
     blogService.setToken('');
   }
   const addBlog = (blogObject) => {
-    try {
-      newBlogMutation.mutate(blogObject);
-      displayMessage('Successfully created blog');
-    } catch (error) {
-      displayMessage(error.message, true);
-    }
-  }
-  const addLike = async (blogId) => {
-    const correctBlog = blogs.filter((blog) => blog.id === blogId);
-    console.log(correctBlog);
-    try {
-      const updatedBlog = await blogService.updateLikes(correctBlog[0]);
-      const changedBlogs = blogs.filter((blog) => blog.id !== blogId);
-      setBlogs(sorter([...changedBlogs, updatedBlog]))
-      displayMessage(`Blog now has ${updatedBlog.likes} likes`);
-    } catch (error) {
-      displayMessage(error.message, true);
-    }
-  }
-  const deleteBlog = async (blogId) => {
-    const foundBlog = blogs.filter((blog) => blog.id === blogId);
-    if( window.confirm(`Are you sure you want to delete ${foundBlog[0].title}`)) {
-      try {
-        await blogService.deleteBlog(blogId);
-        const updatedBlogs = blogs.filter((blog) => blog.id !== blogId);
-        setBlogs(sorter(updatedBlogs));
-        displayMessage(`Successfully deleted ${foundBlog[0].title}`);
-      } catch (error)  {
-        displayMessage(error.message, error);
-      }
-    }
+    newBlogMutation.mutate(blogObject);
+    displayMessage(notificationDispatch, 'added new blog');
   }
   return (
     <>
       {( user === null) ? (
         <div className='login'>
           <Message/>
-          <Togglable buttonLabel='login' ref={loginRef}>
+          <Togglable buttonLabel='login'>
             <LoginForm login={handleLogin} />
           </Togglable>
         </div>
@@ -106,12 +66,12 @@ const App = () => {
             <Message />
             <button onClick={handleLogout}>Logout</button>
           </div>
-          <Togglable buttonLabel='New Blog' ref={blogRef}>
+          <Togglable buttonLabel='New Blog'>
             <BlogForm user={user} addBlog={addBlog} />
           </Togglable>
         </div>
       )}
-      <BlogList blogs={blogs} addLike={addLike} deleteBlog={deleteBlog} user={user}/>
+      <BlogList user={user}/>
     </>
   )
 }

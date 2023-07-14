@@ -45,6 +45,12 @@ export function removeNotification () {
     type: 'REMOVE',
   }
 }
+export function displayMessage (dispatch, message, error = false) {
+  dispatch(setNotification(message, error));
+    setTimeout(() => {
+      dispatch(removeNotification())
+    }, 5000)
+}
 export function useNotificationValue () {
   const [notification, notificationDispatch] = useContext(notificationContext);
   return notification;
