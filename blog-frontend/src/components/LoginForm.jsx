@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import blogService from '../services/blogService';
+import loginService from '../services/loginService';
+import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
 
 const LoginForm = ({ login }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const notificationDispatch = useNotificationDispatch();
   const handleChange = (e) => {
     switch(e.target.name) {
       case 'username':
@@ -15,9 +19,18 @@ const LoginForm = ({ login }) => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login({
-      username, password,
-    })
+    try {
+      const response = await loginService.login({username, password});
+      if (response) {
+        // add user ...
+      }
+      blogService.setToken(response.token);
+      window.localStorage.setItem('loggedUser', JSON.stringify(response));
+      displayMessage(notificationDispatch, `Successfully logged in as ${response.name}`);
+    } catch (error) {
+      console.error(error.message);
+      displayMessage(notificationDispatch, 'Incorrect credentials', true);
+    }
     setUsername('');
     setPassword('');
   }
