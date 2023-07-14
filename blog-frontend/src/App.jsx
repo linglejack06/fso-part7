@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef, useContext } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useQuery } from 'react-query';
 import blogService from './services/blogService';
 import loginService from './services/loginService';
+import { newBlogMutation } from './blogMutation';
 import sorter from './utils/sorter';
 import { setNotification, removeNotification, useNotificationDispatch } from './contexts/notificationContext';
 import BlogList from './components/BlogList';
@@ -11,16 +13,17 @@ import Togglable from './components/Togglable';
 
 const App = () => {
   const notificationDispatch = useNotificationDispatch();
-  const [error, setError] = useState(false);
-  const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
   const loginRef = useRef(null);
   const blogRef = useRef(null);
-  useEffect(() => {
-    blogService.getBlogs().then((response) => {
-      setBlogs(sorter(response));
-    });
-  }, []);
+  const blogsResult = useQuery(
+    'blogs',
+    blogService.getBlogs
+  );
+  if(blogsResult.isLoading) {
+    return <div>Loading...</div>
+  };
+  const blogs = sorter(blogsResult.data);
   useEffect(() => {
     const JSONUser = window.localStorage.getItem('loggedUser');
     if (JSONUser) {
@@ -54,10 +57,9 @@ const App = () => {
     window.localStorage.removeItem('loggedUser');
     blogService.setToken('');
   }
-  const addBlog = async (blogObject) => {
+  const addBlog = (blogObject) => {
     try {
-      const blog = await blogService.addBlog(blogObject);
-      setBlogs(sorter([...blogs, blog]));
+      newBlogMutation.mutate(blogObject);
       displayMessage('Successfully created blog');
     } catch (error) {
       displayMessage(error.message, true);
