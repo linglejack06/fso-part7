@@ -5,11 +5,15 @@ import sorter from '../utils/sorter';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
 import { useUserValue } from '../contexts/userContext';
 
-const BlogList = () => {
+const BlogList = ({ onlyUserBlogs }) => {
   const notificationDispatch = useNotificationDispatch();
   const user = useUserValue();
   const queryClient = useQueryClient();
-  const blogResult = useQuery('blogs', () => blogService.getBlogs());
+  const blogResult = useQuery({
+    queryKey: ['blogs', 1],
+    queryFn: blogService.getBlogs,
+    retry: false,
+  });
   const updateBlogLikesMutation = useMutation(blogService.updateLikes, {
     onSuccess: (updatedBlog) => {
       const blogs = queryClient.getQueryData('blogs');
@@ -30,7 +34,13 @@ const BlogList = () => {
     console.error(blogResult);
     return null;
   }
-  const blogs = sorter(blogResult.data);
+  let blogs;
+  if(onlyUserBlogs) {
+    const userBlogs = blogResult.data.filter((blog) => blog.user.username === user.username);
+    blogs = sorter(userBlogs);
+  } else {
+    blogs = sorter(blogResult.data);
+  }
   const addLike = (blogId) => {
     const correctBlog = blogs.find((blog) => blog.id === blogId);
     updateBlogLikesMutation.mutate(correctBlog);

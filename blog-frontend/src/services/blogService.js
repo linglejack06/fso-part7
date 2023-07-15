@@ -37,6 +37,6 @@ const updateLikes = async (blog) => {
   return response.data;
 }
 
-const blogService = { setToken, getBlogs, addBlog, deleteBlog, updateLikes };
+const blogService = { setToken, getBlogs, addBlog, deleteBlog, updateLikes, };
 
 export default blogService;

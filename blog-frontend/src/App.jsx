@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { setUser, removeUser, useUserDispatch, useUserValue } from './contexts/userContext';
-import { useQueryClient, useMutation } from 'react-query';
+import { useQueryClient, useMutation, useQuery } from 'react-query';
 import blogService from './services/blogService';
 import loginService from './services/loginService';
 import { displayMessage, useNotificationDispatch } from './contexts/notificationContext';
 import BlogList from './components/BlogList';
+import User from './components/User';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Message from './components/Message';
@@ -15,6 +16,7 @@ const App = () => {
   const queryClient = useQueryClient();
   const userDispatch = useUserDispatch();
   const user = useUserValue();
+  const blogResponse = useQuery('blogs', blogService.getBlogs);
   useEffect(() => {
     const JSONUser = window.localStorage.getItem('loggedUser');
     if (JSONUser) {
@@ -73,7 +75,8 @@ const App = () => {
           </Togglable>
         </div>
       )}
-      <BlogList/>
+      <BlogList />
+      <User />
     </>
   )
 }
