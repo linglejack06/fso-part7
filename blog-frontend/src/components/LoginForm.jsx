@@ -4,7 +4,7 @@ import loginService from '../services/loginService';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
 import { setUser, useUserDispatch } from '../contexts/userContext';
 
-const LoginForm = ({ login }) => {
+const LoginForm = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const notificationDispatch = useNotificationDispatch();

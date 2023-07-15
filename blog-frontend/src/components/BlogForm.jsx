@@ -1,9 +1,22 @@
 import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { useUserValue } from '../contexts/userContext';
+import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
+import blogService from '../services/blogService';
 
-const BlogForm = ({ user, addBlog }) => {
+const BlogForm = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [url, setUrl] = useState('');
+  const user = useUserValue();
+  const notificationDispatch = useNotificationDispatch();
+  const queryClient = useQueryClient();
+  const newBlogMutation = useMutation(blogService.addBlog, {
+    onSuccess: (newBlog) => {
+      const blogs = queryClient.getQueryData('blogs');
+      queryClient.setQueryData('blogs', blogs.concat(newBlog));
+    }
+  })
   const handleChange = (e) => {
     switch (e.target.name) {
       case 'title':
@@ -19,9 +32,8 @@ const BlogForm = ({ user, addBlog }) => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    addBlog({
-      title, author, url,
-    });
+    newBlogMutation.mutate({ title, author, url });
+    displayMessage(notificationDispatch, `Added blog: ${title}`);
     setTitle('');
     setAuthor('');
     setUrl('');
