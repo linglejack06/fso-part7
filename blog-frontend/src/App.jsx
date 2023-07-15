@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { setUser, removeUser, useUserDispatch, useUserValue } from './contexts/userContext';
 import { useQueryClient, useMutation } from 'react-query';
 import blogService from './services/blogService';
 import loginService from './services/loginService';
@@ -12,12 +13,13 @@ import Togglable from './components/Togglable';
 const App = () => {
   const notificationDispatch = useNotificationDispatch();
   const queryClient = useQueryClient();
-  const [user, setUser] = useState(null);
+  const userDispatch = useUserDispatch();
+  const user = useUserValue();
   useEffect(() => {
     const JSONUser = window.localStorage.getItem('loggedUser');
     if (JSONUser) {
       const userObject = JSON.parse(JSONUser)
-      setUser(userObject);
+      userDispatch(setUser(userObject));
       blogService.setToken(userObject.token);
     }
   }, [])
@@ -42,7 +44,7 @@ const App = () => {
     }
   }
   const handleLogout = () => {
-    setUser(null);
+    userDispatch(removeUser());
     window.localStorage.removeItem('loggedUser');
     blogService.setToken('');
   }
@@ -71,7 +73,7 @@ const App = () => {
           </Togglable>
         </div>
       )}
-      <BlogList user={user}/>
+      <BlogList/>
     </>
   )
 }

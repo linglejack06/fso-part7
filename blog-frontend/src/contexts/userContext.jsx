@@ -1,17 +1,13 @@
 import { createContext, useContext, useReducer } from 'react';
 
-const userContext = createContext();
+export const userContext = createContext();
 
 const userReducer = (state, action) => {
   switch(action.type) {
     case 'SET':
       return action.payload;
     case 'REMOVE':
-      return {
-        token: '',
-        username: '',
-        name: '',
-      }
+      return null
   }
 }
 export const setUser = (user) => ({
@@ -22,11 +18,7 @@ export const removeUser = () => ({
   type: 'REMOVE'
 })
 export const UserContextProvider = ({ children }) => {
-  const [user, userDispatch] = useReducer(userReducer, {
-    token: '',
-    username: '',
-    name: ''
-  });
+  const [user, userDispatch] = useReducer(userReducer, null);
   return (
     <userContext.Provider value={[user, userDispatch]}>
       {children}

@@ -2,11 +2,13 @@ import { useState } from 'react';
 import blogService from '../services/blogService';
 import loginService from '../services/loginService';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
+import { setUser, useUserDispatch } from '../contexts/userContext';
 
 const LoginForm = ({ login }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const notificationDispatch = useNotificationDispatch();
+  const userDispatch = useUserDispatch();
   const handleChange = (e) => {
     switch(e.target.name) {
       case 'username':
@@ -21,9 +23,10 @@ const LoginForm = ({ login }) => {
     e.preventDefault();
     try {
       const response = await loginService.login({username, password});
-      if (response) {
-        // add user ...
+      if (!response) {
+        return;
       }
+      userDispatch(setUser(response))
       blogService.setToken(response.token);
       window.localStorage.setItem('loggedUser', JSON.stringify(response));
       displayMessage(notificationDispatch, `Successfully logged in as ${response.name}`);

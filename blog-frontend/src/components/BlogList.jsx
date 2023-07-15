@@ -3,9 +3,11 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import blogService from '../services/blogService';
 import sorter from '../utils/sorter';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
+import { useUserValue } from '../contexts/userContext';
 
-const BlogList = ({ user }) => {
+const BlogList = () => {
   const notificationDispatch = useNotificationDispatch();
+  const user = useUserValue();
   const queryClient = useQueryClient();
   const blogResult = useQuery('blogs', () => blogService.getBlogs());
   const updateBlogLikesMutation = useMutation(blogService.updateLikes, {
