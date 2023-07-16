@@ -70,6 +70,7 @@ const ExpandedBlog = () => {
       <Togglable buttonLabel='Add Comment'>
         {/* <CommentForm handleSubmit={handleComment} /> */}
       </Togglable>
+      {/* comment list */}
     </div>
   )
 }
