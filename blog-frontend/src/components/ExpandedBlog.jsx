@@ -1,9 +1,30 @@
 import { useQueryClient, useMutation, useQuery } from "react-query";
 import blogService from "../services/blogService";
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
 import { useUserValue } from "../contexts/userContext";
 import { displayMessage, useNotificationDispatch } from "../contexts/notificationContext";
+import Togglable from './Togglable';
 
+const BlogDetails = ({ selectedBlog, user, deleteBlog, addLike }) => {
+  return (
+    <div>
+    <div>
+      <h2>{selectedBlog.title}</h2>
+        {
+          (user.username === selectedBlog.user.username)
+            ? <button onClick={deleteBlog}>Delete</button>
+            : (null)
+        }
+    </div>
+    <a href={selectedBlog.url}>{selectedBlog.url}</a>
+    <div>
+      <p>{selectedBlog.likes} Likes</p>
+      <button onClick={addLike}>Like</button>
+    </div>
+    <p>Created By: {selectedBlog.user.name}</p>
+  </div>
+  )
+}
 const ExpandedBlog = () => {
   const notificationDispatch = useNotificationDispatch();
   const user = useUserValue();
@@ -45,20 +66,10 @@ const ExpandedBlog = () => {
   console.log(selectedBlog);
   return (
     <div>
-      <div>
-        <h2>{selectedBlog.title}</h2>
-        {
-          (user.username === selectedBlog.user.username)
-            ? <button onClick={deleteBlog}>Delete</button>
-            : (null)
-        }
-      </div>
-      <a href={selectedBlog.url}>{selectedBlog.url}</a>
-      <div>
-        <p>{selectedBlog.likes} Likes</p>
-        <button onClick={addLike}>Like</button>
-      </div>
-      <p>Created By: {selectedBlog.user.name}</p>
+      <BlogDetails selectedBlog={selectedBlog} user={user} deleteBlog={deleteBlog} addLike={addLike} />
+      <Togglable buttonLabel='Add Comment'>
+        {/* <CommentForm handleSubmit={handleComment} /> */}
+      </Togglable>
     </div>
   )
 }
