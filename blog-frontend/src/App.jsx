@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import Users from './components/Users';
 import User from './components/User';
 import BlogList from './components/BlogList';
+import ExpandedBlog from './components/ExpandedBlog';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Message from './components/Message';
@@ -27,6 +28,7 @@ const App = () => {
       <Message />
       <Routes>
         <Route path='/' element={<BlogList />} />
+        <Route path='/blogs/:id' element={<ExpandedBlog />} />
         <Route path='/users' element={user 
           ? <Users /> 
           : <Navigate replace to='/login' />}

@@ -3,7 +3,6 @@ import { useQuery, useMutation, useQueryClient } from 'react-query';
 import blogService from '../services/blogService';
 import sorter from '../utils/sorter';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
-import { useUserValue } from '../contexts/userContext';
 
 const BlogList = ({ user }) => {
   const notificationDispatch = useNotificationDispatch();
@@ -18,11 +17,6 @@ const BlogList = ({ user }) => {
       const blogs = queryClient.getQueryData('blogs');
       const updatedBlogs = blogs.map((blog) => blog.id === updatedBlog.id ? updatedBlog : blog);
       queryClient.setQueryData('blogs', updatedBlogs);
-    }
-  })
-  const deleteBlogMutation = useMutation(blogService.deleteBlog, {
-    onSuccess: () => {
-      queryClient.invalidateQueries('blogs');
     }
   })
   if(blogResult.isLoading) {
@@ -48,11 +42,6 @@ const BlogList = ({ user }) => {
     updateBlogLikesMutation.mutate(correctBlog);
     displayMessage(notificationDispatch, 'Added like');
   }
-  const deleteBlog = (blogId) => {
-    const blogToDelete = blogs.find((blog) => blog.id === blogId);
-    deleteBlogMutation.mutate(blogToDelete);
-    displayMessage(notificationDispatch, 'deleted blog');
-  }
   return (
     <div className='blog-list'>
       <h2>{title}</h2>
@@ -67,8 +56,6 @@ const BlogList = ({ user }) => {
               key={blog.id}
               blog={blog}
               addLike={addLike}
-              deleteBlog={deleteBlog}
-              isMadeByUser={isMadeByUser}
               index={index}
             />
           )
