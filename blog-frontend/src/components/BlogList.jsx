@@ -5,9 +5,8 @@ import sorter from '../utils/sorter';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
 import { useUserValue } from '../contexts/userContext';
 
-const BlogList = ({ onlyUserBlogs }) => {
+const BlogList = ({ user }) => {
   const notificationDispatch = useNotificationDispatch();
-  const user = useUserValue();
   const queryClient = useQueryClient();
   const blogResult = useQuery({
     queryKey: 'blogs',
@@ -35,11 +34,14 @@ const BlogList = ({ onlyUserBlogs }) => {
     return null;
   }
   let blogs;
-  if(onlyUserBlogs) {
+  let title;
+  if(user) {
     const userBlogs = blogResult.data.filter((blog) => blog.user.username === user.username);
     blogs = sorter(userBlogs);
+    title = `${user.name}'s Blogs`;
   } else {
     blogs = sorter(blogResult.data);
+    title = 'All Blogs';
   }
   const addLike = (blogId) => {
     const correctBlog = blogs.find((blog) => blog.id === blogId);
@@ -53,7 +55,7 @@ const BlogList = ({ onlyUserBlogs }) => {
   }
   return (
     <div className='blog-list'>
-      <h2>Blogs</h2>
+      <h2>{title}</h2>
       <ul>
         {blogs.map((blog, index) => {
           let isMadeByUser = false;

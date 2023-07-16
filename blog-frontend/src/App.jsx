@@ -3,6 +3,7 @@ import { setUser, useUserDispatch, useUserValue } from './contexts/userContext';
 import blogService from './services/blogService';
 import NavBar from './components/NavBar';
 import Users from './components/Users';
+import User from './components/User';
 import BlogList from './components/BlogList';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
@@ -30,6 +31,7 @@ const App = () => {
           ? <Users /> 
           : <Navigate replace to='/login' />}
         />
+        <Route path='/users/:id' element={<User />} />
         <Route path='/create' element={<BlogForm />} />
         <Route path='/login' element={<LoginForm />} />
       </Routes>
