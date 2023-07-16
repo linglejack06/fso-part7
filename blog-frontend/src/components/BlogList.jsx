@@ -10,7 +10,7 @@ const BlogList = ({ onlyUserBlogs }) => {
   const user = useUserValue();
   const queryClient = useQueryClient();
   const blogResult = useQuery({
-    queryKey: ['blogs', 1],
+    queryKey: 'blogs',
     queryFn: blogService.getBlogs,
     retry: false,
   });

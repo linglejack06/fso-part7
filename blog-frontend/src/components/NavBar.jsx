@@ -10,14 +10,16 @@ const NavBar = () => {
     window.localStorage.removeItem('loggedUser');
     userDispatch(removeUser());
   }
+  console.log(user);
   return (
     <div>
       <Link to='/'>Home</Link>
       <Link to='/users'>Users</Link>
+      {/* add spacer to push above to left and below to right */}
       <Link to='/create'>Create Blog</Link>
-      {user === null ? (
+      {user ? (
         <div>
-          <p>{user.name} Logged in</p>
+          <p>Logged in: {user.username}</p>
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (

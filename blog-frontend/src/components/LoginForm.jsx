@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import blogService from '../services/blogService';
 import loginService from '../services/loginService';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
@@ -9,6 +10,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const notificationDispatch = useNotificationDispatch();
   const userDispatch = useUserDispatch();
+  const navigate = useNavigate();
   const handleChange = (e) => {
     switch(e.target.name) {
       case 'username':
@@ -36,6 +38,7 @@ const LoginForm = () => {
     }
     setUsername('');
     setPassword('');
+    navigate('/');
   }
   return (
     <form onSubmit={handleSubmit}>

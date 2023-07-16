@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useUserValue } from '../contexts/userContext';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
 import blogService from '../services/blogService';
@@ -14,9 +15,11 @@ const BlogForm = () => {
   const newBlogMutation = useMutation(blogService.addBlog, {
     onSuccess: (newBlog) => {
       const blogs = queryClient.getQueryData('blogs');
+      console.log(blogs);
       queryClient.setQueryData('blogs', blogs.concat(newBlog));
     }
   })
+  const navigate = useNavigate();
   const handleChange = (e) => {
     switch (e.target.name) {
       case 'title':
@@ -37,6 +40,7 @@ const BlogForm = () => {
     setTitle('');
     setAuthor('');
     setUrl('');
+    navigate('/');
   }
   return (
     <form onSubmit={handleSubmit}>
