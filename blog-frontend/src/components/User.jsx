@@ -5,10 +5,10 @@ import blogService from '../services/blogService';
 import Blog from './Blog';
 import BlogList from './BlogList';
 
-const User = () => {
+const User = ({ selectedUser }) => {
   return (
     <div>
-      <BlogList onlyUserBlogs={true} />
+      <BlogList user={selectedUser} />
     </div>
   )
 }

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { setUser, useUserDispatch, useUserValue } from './contexts/userContext';
 import blogService from './services/blogService';
 import NavBar from './components/NavBar';
+import Users from './components/Users';
 import BlogList from './components/BlogList';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
@@ -25,10 +26,10 @@ const App = () => {
       <Message />
       <Routes>
         <Route path='/' element={<BlogList />} />
-        {/* <Route path='/users' element={user 
+        <Route path='/users' element={user 
           ? <Users /> 
           : <Navigate replace to='/login' />}
-        /> */}
+        />
         <Route path='/create' element={<BlogForm />} />
         <Route path='/login' element={<LoginForm />} />
       </Routes>
