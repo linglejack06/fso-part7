@@ -1,13 +1,11 @@
-import { useEffect, useRef } from 'react'
-import { setUser, removeUser, useUserDispatch, useUserValue } from './contexts/userContext';
+import { useEffect } from 'react'
+import { setUser, useUserDispatch, useUserValue } from './contexts/userContext';
 import blogService from './services/blogService';
-import { useNotificationDispatch } from './contexts/notificationContext';
 import BlogList from './components/BlogList';
-import User from './components/User';
 import LoginForm from './components/LoginForm';
 import BlogForm from './components/BlogForm';
 import Message from './components/Message';
-import Togglable from './components/Togglable';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 const App = () => {
   const userDispatch = useUserDispatch();
@@ -20,34 +18,19 @@ const App = () => {
       blogService.setToken(userObject.token);
     }
   }, [])
-  const handleLogout = () => {
-    userDispatch(removeUser());
-    window.localStorage.removeItem('loggedUser');
-    blogService.setToken('');
-  }
   return (
     <>
-      {( user === null) ? (
-        <div className='login'>
-          <Message />
-          <Togglable buttonLabel='login'>
-            <LoginForm login={handleLogin} />
-          </Togglable>
-        </div>
-      ) : (
-        <div>
-          <div>
-            <h1>Logged In: {user.name}</h1>
-            <Message />
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-          <Togglable buttonLabel='New Blog'>
-            <BlogForm user={user} addBlog={addBlog} />
-          </Togglable>
-        </div>
-      )}
-      <BlogList />
-      <User />
+      <NavBar />
+      <Message />
+      <Routes>
+        <Route path='/' element={<BlogList />} />
+        <Route path='/users' element={user 
+          ? <Users /> 
+          : <Navigate replace to='/login' />}
+        />
+        <Route path='/create' element={<BlogForm />} />
+        <Route path='/login' element={<LoginForm />} />
+      </Routes>
     </>
   )
 }
