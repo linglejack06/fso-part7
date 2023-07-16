@@ -36,7 +36,12 @@ const updateLikes = async (blog) => {
   const response = await axios.put(`${BASEURL}/${blog.id}`, { likes: blog.likes + 1 }, params);
   return response.data;
 }
-
-const blogService = { setToken, getBlogs, addBlog, deleteBlog, updateLikes, };
+const addComment = async (blog, comment) => {
+  const response = await axios.put(`${BASEURL}/${blog.id}/comments`, {
+    comments: [...blog.comments, comment],
+  });
+  return response.data;
+}
+const blogService = { setToken, getBlogs, addBlog, deleteBlog, updateLikes, addComment, };
 
 export default blogService;
