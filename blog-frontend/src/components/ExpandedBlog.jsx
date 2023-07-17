@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useUserValue } from "../contexts/userContext";
 import { displayMessage, useNotificationDispatch } from "../contexts/notificationContext";
 import Togglable from './Togglable';
+import CommentForm from './CommentForm';
+import CommentList from './CommentList';
 
 const BlogDetails = ({ selectedBlog, user, deleteBlog, addLike }) => {
   return (
@@ -68,9 +70,9 @@ const ExpandedBlog = () => {
     <div>
       <BlogDetails selectedBlog={selectedBlog} user={user} deleteBlog={deleteBlog} addLike={addLike} />
       <Togglable buttonLabel='Add Comment'>
-        {/* <CommentForm handleSubmit={handleComment} /> */}
+        <CommentForm />
       </Togglable>
-      {/* comment list */}
+      <CommentList comments={selectedBlog.comments} />
     </div>
   )
 }
