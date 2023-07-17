@@ -65,7 +65,6 @@ const ExpandedBlog = () => {
     updateBlogLikesMutation.mutate(selectedBlog);
     displayMessage(notificationDispatch, `Added like to ${selectedBlog.title}`);
   }
-  console.log(selectedBlog);
   return (
     <div>
       <BlogDetails selectedBlog={selectedBlog} user={user} deleteBlog={deleteBlog} addLike={addLike} />

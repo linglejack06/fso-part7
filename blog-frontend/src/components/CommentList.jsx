@@ -10,7 +10,7 @@ const CommentList = ({ comments }) => {
   return (
     <div>
       {comments.map((comment) => {
-        <Comment key={comment} comment={comment} />
+        return <Comment key={comment} comment={comment} />
       })}
     </div>
   )
