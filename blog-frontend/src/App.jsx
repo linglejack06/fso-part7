@@ -36,6 +36,7 @@ const App = () => {
         <Route path='/users/:id' element={<User />} />
         <Route path='/create' element={<BlogForm />} />
         <Route path='/login' element={<LoginForm />} />
+        <Route path='/signup' element={<LoginForm signup={true} />} />
       </Routes>
     </>
   )
