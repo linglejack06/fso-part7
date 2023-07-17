@@ -1,61 +1,61 @@
-import { createContext, useReducer, useContext } from 'react';
+import { createContext, useReducer, useContext } from "react";
 
 const notificationContext = createContext();
 
 const notificationReducer = (state, action) => {
-  switch(action.type) {
-    case 'SET':
+  switch (action.type) {
+    case "SET":
       console.log(action.payload);
       return {
         message: action.payload.message,
         error: action.payload.error,
-      }
-    case 'REMOVE':
+      };
+    case "REMOVE":
       return {
-        message: '',
+        message: "",
         error: false,
       };
     default:
       return state;
   }
-}
+};
 
 export const NotificationContextProvider = ({ children }) => {
   const [notification, notificationDispatch] = useReducer(notificationReducer, {
-    message: '',
+    message: "",
     error: false,
   });
   return (
     <notificationContext.Provider value={[notification, notificationDispatch]}>
       {children}
     </notificationContext.Provider>
-  )
-}
-export function setNotification (message, error) {
+  );
+};
+export function setNotification(message, error) {
   return {
-    type: 'SET',
+    type: "SET",
     payload: {
       message: message,
       error: error,
     },
-  }
+  };
 }
-export function removeNotification () {
+export function removeNotification() {
   return {
-    type: 'REMOVE',
-  }
+    type: "REMOVE",
+  };
 }
-export function displayMessage (dispatch, message, error = false) {
+export function displayMessage(dispatch, message, error = false) {
   dispatch(setNotification(message, error));
-    setTimeout(() => {
-      dispatch(removeNotification())
-    }, 5000)
+  setTimeout(() => {
+    dispatch(removeNotification());
+  }, 5000);
 }
-export function useNotificationValue () {
+export function useNotificationValue() {
   const [notification, notificationDispatch] = useContext(notificationContext);
   return notification;
 }
-export function useNotificationDispatch () {
+export function useNotificationDispatch() {
   const [notification, notificationDispatch] = useContext(notificationContext);
   return notificationDispatch;
 }
