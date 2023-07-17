@@ -69,7 +69,7 @@ const ExpandedBlog = () => {
     <div>
       <BlogDetails selectedBlog={selectedBlog} user={user} deleteBlog={deleteBlog} addLike={addLike} />
       <Togglable buttonLabel='Add Comment'>
-        <CommentForm />
+        <CommentForm blog={selectedBlog} />
       </Togglable>
       <CommentList comments={selectedBlog.comments} />
     </div>

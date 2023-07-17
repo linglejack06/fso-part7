@@ -3,14 +3,15 @@ import { useMutation, useQueryClient } from 'react-query';
 import blogService from '../services/blogService';
 import { displayMessage, useNotificationDispatch } from '../contexts/notificationContext';
 
-const CommentForm = () => {
+const CommentForm = ({ blog }) => {
   const queryClient = useQueryClient();
   const notificationDispatch = useNotificationDispatch();
   const [comment, setComment] = useState('');
   const updateBlogCommentsMutation = useMutation(blogService.addComment, {
     onSuccess: (newBlog) => {
       const blogs = queryClient.getQueryData('blogs');
-      queryClient.setQueryData('blogs', [...blogs, newBlog])
+      const updatedBlogs= blogs.map((blog) => blog.id === newBlog.id ? newBlog : blog);
+      queryClient.setQueryData('blogs', updatedBlogs)
     }
   });
   const handleChange = (e) => {
@@ -18,7 +19,7 @@ const CommentForm = () => {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateBlogCommentsMutation.mutate(comment);
+    updateBlogCommentsMutation.mutate({blog, comment});
     displayMessage(notificationDispatch, `Added comment: ${comment}`);
   }
 
