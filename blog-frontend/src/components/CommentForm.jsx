@@ -21,6 +21,7 @@ const CommentForm = ({ blog }) => {
     e.preventDefault();
     updateBlogCommentsMutation.mutate({blog, comment});
     displayMessage(notificationDispatch, `Added comment: ${comment}`);
+    setComment('');
   }
 
   return (

@@ -37,7 +37,7 @@ const updateLikes = async (blog) => {
   return response.data;
 }
 const addComment = async (params) => {
-  const response = await axios.put(`${BASEURL}/${params.blog.id}/comments`, {
+  const response = await axios.post(`${BASEURL}/${params.blog.id}/comments`, {
     comment: params.comment
   });
   return response.data;
