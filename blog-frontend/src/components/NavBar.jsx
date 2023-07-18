@@ -16,22 +16,25 @@ const NavBar = () => {
   };
   console.log(user);
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <Link to="/users">Users</Link>
-      {/* add spacer to push above to left and below to right */}
-      <Link to="/create">Create Blog</Link>
-      {user ? (
-        <div>
-          <p>Logged in: {user.username}</p>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
-        <div>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+    <div className="flex justify-between p-4">
+      <div className="flex flex-auto gap-8">
+        <Link to="/">Home</Link>
+        <Link to="/users">Users</Link>
+        <Link to="/create">Create Blog</Link>
+      </div>
+      <div className="flex-auto">
+        {user ? (
+          <div className="flex flex-auto justify-end gap-8">
+            <p>Logged in: {user.username}</p>
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+        ) : (
+          <div className="flex flex-auto justify-end">
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

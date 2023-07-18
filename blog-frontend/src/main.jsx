@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 import App from "./App.jsx";
 import { NotificationContextProvider } from "./contexts/notificationContext.jsx";
 import { UserContextProvider } from "./contexts/userContext.jsx";
@@ -18,5 +19,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </UserContextProvider>
       </QueryClientProvider>
     </Router>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
