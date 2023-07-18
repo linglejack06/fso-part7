@@ -23,6 +23,10 @@ const BlogForm = () => {
     },
   });
   const navigate = useNavigate();
+  if (!user) {
+    displayMessage(notificationDispatch, "Login to add blog", true);
+    return <div>No Logged In user found</div>;
+  }
   const handleChange = (e) => {
     switch (e.target.name) {
       case "title":
