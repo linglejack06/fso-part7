@@ -11,11 +11,18 @@ import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
 
 const BlogDetails = ({ selectedBlog, user, deleteBlog, addLike }) => {
+  let userValue = user;
+  if (!userValue) {
+    userValue = {
+      username: "",
+      name: "",
+    };
+  }
   return (
     <div>
       <div>
         <h2>{selectedBlog.title}</h2>
-        {user.username === selectedBlog.user.username ? (
+        {userValue.username === selectedBlog.user.username ? (
           <button onClick={deleteBlog}>Delete</button>
         ) : null}
       </div>
@@ -38,7 +45,7 @@ const ExpandedBlog = () => {
     onSuccess: (updatedBlog) => {
       const blogs = queryClient.getQueryData("blogs");
       const updatedBlogs = blogs.map((blog) =>
-        blog.id === updatedBlog.id ? updatedBlog : blog
+        blog.id === updatedBlog.id ? updatedBlog : blog,
       );
       queryClient.setQueryData("blogs", updatedBlogs);
     },
@@ -56,6 +63,8 @@ const ExpandedBlog = () => {
     displayMessage(notificationDispatch, "Error Loading blog", true);
     console.error(blogResult.error.message);
     return;
+  }
+  if (!user) {
   }
   const blogs = blogResult.data;
   const selectedBlog = blogs.find((blog) => blog.id === id);
