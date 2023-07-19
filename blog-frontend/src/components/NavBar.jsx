@@ -38,7 +38,11 @@ const NavBar = () => {
           onClick={toggleFull}
           className="absolute right-2 top-2"
         >
-          Open
+          <svg viewBox="0 0 100 80" width="20" height="20">
+            <rect width="100" rx="8" height="15"></rect>
+            <rect y="30" rx="8" width="100" height="15"></rect>
+            <rect y="60" rx="8" width="100" height="15"></rect>
+          </svg>
         </button>
       </div>
       <MobileNav

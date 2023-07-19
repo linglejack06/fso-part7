@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import closeIcon from "../closeIcon.svg";
 
 const MobileNav = ({ full, toggleFull, path, user, handleLogout }) => {
   return (
@@ -8,7 +9,7 @@ const MobileNav = ({ full, toggleFull, path, user, handleLogout }) => {
       } relative h-full items-center rounded-b-md border-4 border-purple-200 bg-purple-200 bg-opacity-90 shadow-lg md:hidden`}
     >
       <button onClick={toggleFull} className={`absolute right-2 top-2`}>
-        Close
+        <img src={closeIcon} alt="Close Menu" className="h-4"></img>
       </button>
       <Link
         className={`${
