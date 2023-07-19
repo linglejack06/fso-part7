@@ -23,7 +23,7 @@ const App = () => {
     }
   }, []);
   return (
-    <div>
+    <div className="min-w-screen min-h-screen">
       <NavBar />
       <Message />
       <Routes>
