@@ -30,7 +30,10 @@ const NavBar = () => {
           full ? "hidden" : ""
         }`}
       >
-        <Link to="/" className={`absolute left-2 top-2 text-orange-600`}>
+        <Link
+          to="/"
+          className={`absolute left-2 top-2 text-lg text-orange-600`}
+        >
           Blog-it!
         </Link>
         <button

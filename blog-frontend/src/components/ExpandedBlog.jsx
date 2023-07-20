@@ -6,9 +6,11 @@ import {
   displayMessage,
   useNotificationDispatch,
 } from "../contexts/notificationContext";
+import { Link } from "react-router-dom";
 import Togglable from "./Togglable";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
+import { ReactComponent as EmptyHeart } from "../emptyHeart.svg";
 
 const BlogDetails = ({ selectedBlog, user, deleteBlog, addLike }) => {
   let userValue = user;
@@ -19,19 +21,43 @@ const BlogDetails = ({ selectedBlog, user, deleteBlog, addLike }) => {
     };
   }
   return (
-    <div>
-      <div>
-        <h2>{selectedBlog.title}</h2>
+    <div className="h-full w-full">
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-bold">{selectedBlog.title}</h2>
+          <a
+            href={selectedBlog.url}
+            className="font-semibold text-orange-600 hover:text-purple-700 hover:underline"
+          >
+            Link To Blog
+          </a>
+        </div>
         {userValue.username === selectedBlog.user.username ? (
-          <button onClick={deleteBlog}>Delete</button>
+          <button
+            onClick={deleteBlog}
+            className="rounded-md bg-orange-100 p-2 font-bold text-red-600 transition-colors duration-300 hover:bg-red-500 hover:text-white"
+          >
+            Delete
+          </button>
         ) : null}
       </div>
-      <a href={selectedBlog.url}>{selectedBlog.url}</a>
-      <div>
-        <p>{selectedBlog.likes} Likes</p>
-        <button onClick={addLike}>Like</button>
+      <div className="mb-4 flex items-center">
+        <button onClick={addLike} className="mr-4">
+          <EmptyHeart className="h-10 transition duration-300 hover:scale-110" />
+        </button>
+        <p className="text-lg font-semibold text-gray-700">
+          {selectedBlog.likes} Likes
+        </p>
       </div>
-      <p>Created By: {selectedBlog.user.name}</p>
+      <div className="flex-col">
+        <p className="font-semibold">Written By: {selectedBlog.author}</p>
+        <p className="font-semibold text-orange-600 hover:font-bold hover:text-purple-700 hover:underline">
+          Posted By:{" "}
+          <Link to={`/users/${selectedBlog.user.id}`}>
+            {selectedBlog.user.name}
+          </Link>
+        </p>
+      </div>
     </div>
   );
 };
@@ -78,16 +104,17 @@ const ExpandedBlog = () => {
     displayMessage(notificationDispatch, `Added like to ${selectedBlog.title}`);
   };
   return (
-    <div>
+    <div className="h-full w-full p-4">
       <BlogDetails
         selectedBlog={selectedBlog}
         user={user}
         deleteBlog={deleteBlog}
         addLike={addLike}
       />
-      <Togglable buttonLabel="Add Comment">
+      <div>
+        <h2 className="mb-1 mt-4 text-lg font-semibold">Comments</h2>
         <CommentForm blog={selectedBlog} />
-      </Togglable>
+      </div>
       <CommentList comments={selectedBlog.comments} />
     </div>
   );

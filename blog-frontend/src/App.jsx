@@ -23,7 +23,7 @@ const App = () => {
     }
   }, []);
   return (
-    <div className="min-w-screen min-h-screen">
+    <div className="min-w-screen min-h-screen text-purple-950">
       <NavBar />
       <Message />
       <Routes>
