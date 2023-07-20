@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 
 const WebNav = ({ path, user, handleLogout }) => {
   return (
-    <div className="hidden h-12 rounded-b-md border-4 border-purple-200 bg-purple-200 bg-opacity-90 shadow-lg md:flex">
+    <div className="hidden h-12 rounded-b-md border-4 border-purple-700 bg-purple-700 bg-opacity-90 shadow-lg md:flex">
       <div className="flex h-full flex-auto">
         <Link
           className={`${
             path.pathname === "/" ? "text-orange-600" : ""
-          } text-md flex h-full items-center px-4 text-center font-semibold transition duration-200 hover:font-bold hover:text-purple-700 hover:underline hover:underline-offset-4`}
+          } text-md flex h-full items-center px-4 text-center font-semibold transition duration-200 hover:font-bold hover:text-purple-950 hover:underline hover:underline-offset-4`}
           to="/"
         >
           Blog-it!
@@ -15,7 +15,7 @@ const WebNav = ({ path, user, handleLogout }) => {
         <Link
           className={`${
             path.pathname === "/users" ? "text-orange-600" : ""
-          } text-md flex h-full items-center px-4 font-semibold transition duration-200 hover:font-bold hover:text-purple-700 hover:underline hover:underline-offset-4`}
+          } text-md flex h-full items-center px-4 font-semibold transition duration-200 hover:font-bold hover:text-purple-950 hover:underline hover:underline-offset-4`}
           to="/users"
         >
           Users
@@ -24,7 +24,7 @@ const WebNav = ({ path, user, handleLogout }) => {
           <Link
             className={`${
               path.pathname === "/create" ? "text-orange-600" : ""
-            } text-md flex h-full items-center px-4 font-semibold transition duration-200 hover:font-bold hover:text-purple-700 hover:underline hover:underline-offset-4`}
+            } text-md flex h-full items-center px-4 font-semibold transition duration-200 hover:font-bold hover:text-purple-950 hover:underline hover:underline-offset-4`}
             to="/create"
           >
             Create Blog
@@ -39,7 +39,7 @@ const WebNav = ({ path, user, handleLogout }) => {
             </h3>
             <div className="flex h-full items-center">
               <button
-                className="text-md h-7 rounded-lg bg-purple-600 px-4 text-center font-semibold text-white transition duration-200 hover:scale-105 hover:bg-purple-700 hover:font-bold"
+                className="text-md h-7 rounded-lg bg-orange-600 px-4 text-center font-semibold text-white transition duration-200 hover:scale-105 hover:bg-purple-950 hover:font-bold"
                 onClick={handleLogout}
               >
                 Logout

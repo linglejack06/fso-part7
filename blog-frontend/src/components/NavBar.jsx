@@ -24,9 +24,9 @@ const NavBar = () => {
     setFull(!full);
   };
   return (
-    <div className="relative mb-12 h-full md:mb-2">
+    <div className="relative mb-12 h-full md:mb-2 text-white">
       <div
-        className={`text-md fixed left-0 right-0 top-0 mb-4 h-10 rounded-b-md border-4 border-purple-200 bg-purple-200 bg-opacity-90 font-semibold shadow-md md:hidden ${
+        className={`text-md fixed left-0 right-0 top-0 mb-4 h-10 rounded-b-md border-4 border-purple-700 bg-purple-700 bg-opacity-90 font-semibold shadow-md md:hidden ${
           full ? "hidden" : ""
         }`}
       >
