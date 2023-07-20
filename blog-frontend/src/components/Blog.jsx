@@ -4,7 +4,7 @@ import { ReactComponent as EmptyHeart } from "../emptyHeart.svg";
 const Blog = ({ blog, addLike, index }) => {
   return (
     <div className="mb-4 flex flex-auto justify-between rounded-lg bg-orange-100 p-4 ring-2 ring-orange-200 md:mb-0">
-      <div className="group flex-auto flex-col">
+      <div className="group flex-auto flex-col hover:cursor-pointer">
         <Link
           to={`/blogs/${blog.id}`}
           className="text-md overflow-hidden font-semibold text-gray-900 transition duration-200 ease-in-out group-hover:font-bold group-hover:text-purple-700 group-hover:underline"
