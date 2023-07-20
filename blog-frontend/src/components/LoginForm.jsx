@@ -44,7 +44,7 @@ const LoginForm = ({ signup }) => {
       window.localStorage.setItem("loggedUser", JSON.stringify(response));
       displayMessage(
         notificationDispatch,
-        `Successfully logged in as ${response.name}`
+        `Successfully logged in as ${response.name}`,
       );
     } catch (error) {
       console.error(error.message);
@@ -68,6 +68,7 @@ const LoginForm = ({ signup }) => {
           name="username"
           value={username}
           onChange={handleChange}
+          className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
         />
       </div>
       {signup ? (
@@ -79,6 +80,7 @@ const LoginForm = ({ signup }) => {
             name="name"
             value={name}
             onChange={handleChange}
+            className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
           />
         </div>
       ) : null}
@@ -90,9 +92,15 @@ const LoginForm = ({ signup }) => {
           name="password"
           value={password}
           onChange={handleChange}
+          className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
         />
       </div>
-      <button type="submit">{signup ? "Sign up" : "Login"}</button>
+      <button
+        type="submit"
+        className="text-md h-7 rounded-lg bg-purple-600 px-4 text-center font-semibold text-white transition duration-200 hover:scale-105 hover:bg-purple-700 hover:font-bold"
+      >
+        {signup ? "Sign up" : "Login"}
+      </button>
     </form>
   );
 };
