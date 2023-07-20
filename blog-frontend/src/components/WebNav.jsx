@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const WebNav = ({ path, user, handleLogout }) => {
   return (
-    <div className="hidden h-12 rounded-b-md border-4 border-purple-200 bg-purple-200 bg-opacity-90 md:flex">
+    <div className="hidden h-12 rounded-b-md border-4 border-purple-200 bg-purple-200 bg-opacity-90 shadow-lg md:flex">
       <div className="flex h-full flex-auto">
         <Link
           className={`${

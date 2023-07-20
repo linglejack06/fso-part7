@@ -19,7 +19,7 @@ const BlogList = ({ user }) => {
     onSuccess: (updatedBlog) => {
       const blogs = queryClient.getQueryData("blogs");
       const updatedBlogs = blogs.map((blog) =>
-        blog.id === updatedBlog.id ? updatedBlog : blog
+        blog.id === updatedBlog.id ? updatedBlog : blog,
       );
       queryClient.setQueryData("blogs", updatedBlogs);
     },
@@ -36,7 +36,7 @@ const BlogList = ({ user }) => {
   let title;
   if (user) {
     const userBlogs = blogResult.data.filter(
-      (blog) => blog.user.username === user.username
+      (blog) => blog.user.username === user.username,
     );
     blogs = sorter(userBlogs);
     title = `${user.name}'s Blogs`;
@@ -50,14 +50,12 @@ const BlogList = ({ user }) => {
     displayMessage(notificationDispatch, "Added like");
   };
   return (
-    <div className="blog-list">
-      <h2>{title}</h2>
-      <ul>
+    <div className="h-full w-full flex-col px-8">
+      <h2 className="mb-4 flex-none text-lg font-bold text-purple-950">
+        {title}
+      </h2>
+      <ul className="flex-auto flex-col md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
         {blogs.map((blog, index) => {
-          let isMadeByUser = false;
-          if (user && user.name === blog.user.name) {
-            isMadeByUser = true;
-          }
           return (
             <Blog key={blog.id} blog={blog} addLike={addLike} index={index} />
           );
