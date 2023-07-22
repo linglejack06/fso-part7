@@ -5,7 +5,6 @@ const notificationContext = createContext();
 const notificationReducer = (state, action) => {
   switch (action.type) {
     case "SET":
-      console.log(action.payload);
       return {
         message: action.payload.message,
         error: action.payload.error,
