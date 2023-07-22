@@ -3,7 +3,7 @@ import { ReactComponent as EmptyHeart } from "../emptyHeart.svg";
 
 const Blog = ({ blog, addLike, index }) => {
   return (
-    <div className="mb-4 flex flex-auto justify-between rounded-lg bg-orange-100 p-4 ring-2 ring-orange-200 md:mb-0">
+    <div className="mb-4 flex flex-auto justify-between rounded-lg bg-orange-100 p-4 shadow-xl ring-2 ring-orange-200 md:mb-0">
       <div className="group flex-auto flex-col hover:cursor-pointer">
         <Link
           to={`/blogs/${blog.id}`}

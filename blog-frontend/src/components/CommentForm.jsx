@@ -37,7 +37,7 @@ const CommentForm = ({ blog }) => {
         onChange={handleChange}
         id="comment"
         placeholder="Awesome Article!!"
-        className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
+        className="mr-2 h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
       />
       <button
         type="submit"

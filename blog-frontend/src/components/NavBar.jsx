@@ -24,7 +24,7 @@ const NavBar = () => {
     setFull(!full);
   };
   return (
-    <div className="relative mb-12 h-full md:mb-2 text-white">
+    <div className="relative mb-12 h-full text-white md:mb-2">
       <div
         className={`text-md fixed left-0 right-0 top-0 mb-4 h-10 rounded-b-md border-4 border-purple-700 bg-purple-700 bg-opacity-90 font-semibold shadow-md md:hidden ${
           full ? "hidden" : ""
@@ -32,7 +32,7 @@ const NavBar = () => {
       >
         <Link
           to="/"
-          className={`absolute left-2 top-2 text-lg text-orange-600`}
+          className={`absolute left-2 top-1 text-lg text-orange-600`}
         >
           Blog-it!
         </Link>

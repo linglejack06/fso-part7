@@ -35,7 +35,7 @@ const BlogDetails = ({ selectedBlog, user, deleteBlog, addLike }) => {
         {userValue.username === selectedBlog.user.username ? (
           <button
             onClick={deleteBlog}
-            className="rounded-md bg-orange-100 p-2 font-bold text-red-600 transition-colors duration-300 hover:bg-red-500 hover:text-white"
+            className="rounded-md bg-orange-100 p-2 font-bold text-red-600 ring-2 ring-orange-200 transition-colors duration-300 hover:bg-red-500 hover:text-white"
           >
             Delete
           </button>
