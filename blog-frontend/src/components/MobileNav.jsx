@@ -58,8 +58,18 @@ const MobileNav = ({ full, toggleFull, path, user, handleLogout }) => {
           </div>
         ) : (
           <div className="text-md ml-3 flex flex-auto justify-start gap-3 font-semibold">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link
+              to="/login"
+              className="hover:font-bold hover:text-purple-950 hover:underline"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="hover:font-bold hover:text-purple-950 hover:underline"
+            >
+              Sign Up
+            </Link>
           </div>
         )}
       </div>

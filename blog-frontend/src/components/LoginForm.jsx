@@ -59,49 +59,74 @@ const LoginForm = ({ signup }) => {
     navigate("/");
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="input-container">
-        <label htmlFor="username">Username: </label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={username}
-          onChange={handleChange}
-          className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
-        />
-      </div>
-      {signup ? (
-        <div>
-          <label htmlFor="name">Name: </label>
+    <div className="mx-auto w-full max-w-xs">
+      <form
+        onSubmit={handleSubmit}
+        className="mb-4 h-full rounded-lg bg-orange-100 px-8 pb-8 pt-6 shadow-lg ring-2 ring-orange-200"
+      >
+        <h2 className="mb-2 text-center text-lg font-semibold">
+          Login to Blog-it!
+        </h2>
+        <div className="mb-2">
+          <label
+            htmlFor="username"
+            className="text-md mb-2 block font-semibold text-orange-600"
+          >
+            Username{" "}
+          </label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={name}
+            id="username"
+            name="username"
+            value={username}
             onChange={handleChange}
             className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
           />
         </div>
-      ) : null}
-      <div className="input-container">
-        <label htmlFor="password">Password: </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-          className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
-        />
-      </div>
-      <button
-        type="submit"
-        className="text-md h-7 rounded-lg bg-purple-600 px-4 text-center font-semibold text-white transition duration-200 hover:scale-105 hover:bg-purple-700 hover:font-bold"
-      >
-        {signup ? "Sign up" : "Login"}
-      </button>
-    </form>
+        {signup ? (
+          <div className="mb-2">
+            <label
+              htmlFor="name"
+              className="text-md block font-semibold text-orange-600"
+            >
+              Name{" "}
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={handleChange}
+              className="mb-2 h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
+            />
+          </div>
+        ) : null}
+        <div className="mb-2">
+          <label
+            htmlFor="password"
+            className="text-md block font-semibold text-orange-600"
+          >
+            Password{" "}
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            className="mb-2 h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
+          />
+        </div>
+        <div className="flex justify-center">
+          <button
+            className="text-md h-7 w-1/2 rounded-lg bg-purple-600 px-4 text-center font-semibold text-white transition duration-200 hover:scale-105 hover:bg-purple-700 hover:font-bold"
+            type="submit"
+          >
+            {signup ? "Sign up" : "Login"}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 

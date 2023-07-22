@@ -47,9 +47,19 @@ const WebNav = ({ path, user, handleLogout }) => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-auto justify-end">
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+          <div className="text-md ml-3 flex flex-auto items-center justify-end gap-3 font-semibold">
+            <Link
+              to="/login"
+              className="hover:font-bold hover:text-purple-950 hover:underline"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="hover:font-bold hover:text-purple-950 hover:underline"
+            >
+              Sign Up
+            </Link>
           </div>
         )}
       </div>

@@ -34,7 +34,10 @@ const App = () => {
           element={user ? <Users /> : <Navigate replace to="/login" />}
         />
         <Route path="/users/:id" element={<User />} />
-        <Route path="/create" element={<BlogForm />} />
+        <Route
+          path="/create"
+          element={user ? <BlogForm /> : <Navigate replace to="/login" />}
+        />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<LoginForm signup={true} />} />
       </Routes>
