@@ -64,7 +64,7 @@ const LoginForm = ({ signup }) => {
         onSubmit={handleSubmit}
         className="mb-4 h-full rounded-lg bg-orange-100 px-8 pb-8 pt-6 shadow-lg ring-2 ring-orange-200"
       >
-        <h2 className="mb-2 text-center text-lg font-semibold">
+        <h2 className="mb-2 text-center text-xl font-bold">
           Login to Blog-it!
         </h2>
         <div className="mb-2">

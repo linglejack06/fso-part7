@@ -51,9 +51,7 @@ const BlogList = ({ user }) => {
   };
   return (
     <div className="h-full w-full flex-col px-8">
-      <h2 className="mb-4 flex-none text-lg font-bold text-purple-950">
-        {title}
-      </h2>
+      <h2 className="mb-4 flex-none text-xl font-bold">{title}</h2>
       <ul className="flex-auto flex-col md:grid md:grid-cols-2 md:gap-4 lg:grid-cols-3">
         {blogs.map((blog, index) => {
           return (

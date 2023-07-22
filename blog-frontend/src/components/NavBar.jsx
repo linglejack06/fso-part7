@@ -32,7 +32,7 @@ const NavBar = () => {
       >
         <Link
           to="/"
-          className={`absolute left-2 top-1 text-lg text-orange-600`}
+          className={`absolute left-2 top-1 text-lg font-bold text-orange-600`}
         >
           Blog-it!
         </Link>

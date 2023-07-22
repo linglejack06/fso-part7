@@ -55,13 +55,13 @@ const BlogForm = () => {
         onSubmit={handleSubmit}
         className="mb-4 rounded-lg bg-orange-100 p-4 px-8 pb-8 pt-6 shadow-lg ring-2 ring-orange-200"
       >
-        <h2 className="mb-2 text-center text-lg font-semibold">Post a Blog</h2>
+        <h2 className="mb-2 text-center text-xl font-bold">Post a Blog</h2>
         <div className="mb-2">
           <label
             htmlFor="title"
             className="text-md mb-2 block font-semibold text-orange-600"
           >
-            Title:{" "}
+            Title{" "}
           </label>
           <input
             value={title}
@@ -77,7 +77,7 @@ const BlogForm = () => {
             htmlFor="author"
             className="text-md mb-2 block font-semibold text-orange-600"
           >
-            Author:{" "}
+            Author{" "}
           </label>
           <input
             value={author}
@@ -93,7 +93,7 @@ const BlogForm = () => {
             htmlFor="url"
             className="text-md mb-2 block font-semibold text-orange-600"
           >
-            Web Address:{" "}
+            Web Address{" "}
           </label>
           <input
             type="url"

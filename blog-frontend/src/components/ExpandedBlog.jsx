@@ -7,7 +7,6 @@ import {
   useNotificationDispatch,
 } from "../contexts/notificationContext";
 import { Link } from "react-router-dom";
-import Togglable from "./Togglable";
 import CommentForm from "./CommentForm";
 import CommentList from "./CommentList";
 import { ReactComponent as EmptyHeart } from "../emptyHeart.svg";
