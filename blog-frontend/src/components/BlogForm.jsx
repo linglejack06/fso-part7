@@ -42,6 +42,23 @@ const BlogForm = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (title.length <= 3 || author.length <= 3) {
+      displayMessage(
+        notificationDispatch,
+        "Title and author must be at least 4 characters",
+        true,
+      );
+      return;
+    }
+    const url = e.target;
+    if (!url.checkValidity()) {
+      displayMessage(
+        notificationDispatch,
+        "Url must be written as: https://...",
+        true,
+      );
+      return;
+    }
     newBlogMutation.mutate({ title, author, url });
     displayMessage(notificationDispatch, `Added blog: ${title}`);
     setTitle("");
@@ -53,6 +70,7 @@ const BlogForm = () => {
     <div className="mx-auto w-full max-w-xs">
       <form
         onSubmit={handleSubmit}
+        noValidate
         className="mb-4 rounded-lg bg-orange-100 p-4 px-8 pb-8 pt-6 shadow-lg ring-2 ring-orange-200"
       >
         <h2 className="mb-2 text-center text-xl font-bold">Post a Blog</h2>
@@ -68,6 +86,7 @@ const BlogForm = () => {
             onChange={handleChange}
             name="title"
             id="title"
+            required
             placeholder="How to code a blog app"
             className="h-7 w-full rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
           />
@@ -85,6 +104,7 @@ const BlogForm = () => {
             onChange={handleChange}
             name="author"
             id="author"
+            required
             className="h-7 w-full rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
           />
         </div>
@@ -103,6 +123,7 @@ const BlogForm = () => {
             onChange={handleChange}
             name="url"
             id="url"
+            required
             className="h-7  w-full rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
           />
         </div>

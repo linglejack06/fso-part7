@@ -31,6 +31,22 @@ const LoginForm = ({ signup }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (password.length <= 3 || username.length <= 3) {
+      displayMessage(
+        notificationDispatch,
+        "Username and password must be at least 4 characters",
+        true,
+      );
+      return;
+    }
+    if (signup && name.length <= 3) {
+      displayMessage(
+        notificationDispatch,
+        "Name must be at least 4 characters",
+        true,
+      );
+      return;
+    }
     try {
       if (signup) {
         await userService.addUser({ username, password, name });
@@ -62,6 +78,7 @@ const LoginForm = ({ signup }) => {
     <div className="mx-auto w-full max-w-xs">
       <form
         onSubmit={handleSubmit}
+        noValidate
         className="mb-4 h-full rounded-lg bg-orange-100 px-8 pb-8 pt-6 shadow-lg ring-2 ring-orange-200"
       >
         <h2 className="mb-2 text-center text-xl font-bold">
@@ -79,6 +96,7 @@ const LoginForm = ({ signup }) => {
             id="username"
             name="username"
             value={username}
+            required
             onChange={handleChange}
             className="h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
           />
@@ -96,6 +114,7 @@ const LoginForm = ({ signup }) => {
               id="name"
               name="name"
               value={name}
+              required
               onChange={handleChange}
               className="mb-2 h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
             />
@@ -112,6 +131,7 @@ const LoginForm = ({ signup }) => {
             type="password"
             id="password"
             name="password"
+            required
             value={password}
             onChange={handleChange}
             className="mb-2 h-7 rounded-lg border-2 border-purple-950 bg-orange-100 px-4 font-semibold outline-none hover:border-purple-700 focus:border-orange-600"
